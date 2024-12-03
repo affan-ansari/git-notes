@@ -1,7 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-
+import globalReducer from '../slices/globalSlice';
 export const store = configureStore({
-    reducer: {},
+    reducer: {
+        global: globalReducer,
+    },
 });
 
 export type AppDispatch = typeof store.dispatch;

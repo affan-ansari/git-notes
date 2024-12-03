@@ -1,25 +1,13 @@
-import React, { FC } from 'react';
-import Button from '../../components/ui/button';
+import { Box } from '@mui/material';
+import Dashboard from '../../components/dashboard';
 
-let buttonText = 'Click';
-buttonText = 'MUI button';
+import './home.styles.scss';
 
-const Home: FC = () => {
+const Home: React.FC = () => {
     return (
-        <header
-            style={{
-                backgroundColor: 'white',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 'calc(10px + 2vmin)',
-                color: '#282c34',
-            }}
-        >
-            <p>Welcome To React!</p>
-            <Button text={buttonText} onClick={() => alert('Hello 👋')} />
-        </header>
+        <Box className="dashboard__mainBox">
+            <Dashboard />
+        </Box>
     );
 };
 export default Home;
