@@ -1,0 +1,35 @@
+.navbar__mainBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    .navbar__logoBox {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .navbar__loginBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        .navbar__loginBtn {
+            background-color: #ffffff;
+            color: #003b44;
+        }
+        .navbar__searchBox {
+            .MuiOutlinedInput-root {
+                color: #ffffffcc;
+                .MuiOutlinedInput-notchedOutline {
+                    border-color: #ffffffcc;
+                }
+            }
+            .MuiInputLabel-outlined {
+                color: #ffffffcc;
+            }
+            .navbar__searchIcon {
+                color: #ffffffcc;
+            }
+        }
+    }
+}

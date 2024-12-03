@@ -1,22 +1,50 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppBar, Tabs, Tab } from '@mui/material';
+import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
+import EmumbaIcon from '../../assets/svgComponents/EmumbaIcon';
+import './navbar.styles.scss';
+import { Search } from '@mui/icons-material';
+import { GithubAuth } from '../../firebase/init';
+// import { LoginWithGithub } from '../../app/firebase';
 
 export default function Navbar() {
-  return (
-    <AppBar position="static">
-     <Tabs sx={{ flexGrow: 1 }}>
-          <Tab sx={{ color: "whitesmoke" }} label="Home" component={Link} to="/" />
-          <Tab sx={{ color: "whitesmoke" }} label="About" component={Link} to="/about" />
-          <Tab sx={{ color: "whitesmoke" }} label="Test SWR" component={Link} to="/posts" />
-          <Tab
-          sx={{ color: "whitesmoke", marginLeft: "auto" }}
-          label="Login"
-          component={Link}
-          to="/login"
-          />
-        </Tabs>
-    </AppBar>
-  );
-}
+    async function GithubLogIn() {
+        const user = await GithubAuth();
+        console.log('github user: ', user);
+    }
 
+    return (
+        <AppBar position="fixed">
+            <Toolbar>
+                <Box className="navbar__mainBox">
+                    <Box className="navbar__logoBox">
+                        <EmumbaIcon />
+                        <Typography variant="h5">EMUMBA</Typography>
+                    </Box>
+                    <Box className="navbar__loginBox">
+                        <TextField
+                            label=""
+                            placeholder="Search gists..."
+                            className="navbar__searchBox"
+                            size="small"
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <Search className="navbar__searchIcon" />
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
+                        />
+                        <Button
+                            className="navbar__loginBtn"
+                            variant="contained"
+                            onClick={GithubLogIn}
+                        >
+                            Login
+                        </Button>
+                    </Box>
+                </Box>
+            </Toolbar>
+        </AppBar>
+    );
+}
