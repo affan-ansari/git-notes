@@ -1,0 +1,11 @@
+.public-gists-header__headingBox {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    .public-gists-header__btnGroupBtn {
+        border: 1px solid #e3e3e3;
+    }
+    .public-gists-header__selectedViewBtn {
+        background-color: #e3e3e3;
+    }
+}

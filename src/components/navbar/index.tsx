@@ -1,9 +1,9 @@
-import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
 import EmumbaIcon from '../../assets/svgComponents/EmumbaIcon';
-import './navbar.styles.scss';
 import { Search } from '@mui/icons-material';
 import { GithubAuth } from '../../firebase/init';
-// import { LoginWithGithub } from '../../app/firebase';
+import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
+
+import './navbar.styles.scss';
 
 export default function Navbar() {
     async function GithubLogIn() {

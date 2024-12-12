@@ -1,0 +1,10 @@
+.public-gist-card__cardContent {
+    display: flex;
+    gap: 0.5rem;
+    .public-gist-card__text {
+        color: #003b44;
+    }
+    .public-gist-card__gistName {
+        font-weight: bold;
+    }
+}

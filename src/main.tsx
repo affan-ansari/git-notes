@@ -13,15 +13,13 @@ import { SWRConfig } from 'swr';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <SWRConfig value={swrConfig}>
-                        <App />
-                    </SWRConfig>
-                </ThemeProvider>
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <SWRConfig value={swrConfig}>
+                    <App />
+                </SWRConfig>
+            </ThemeProvider>
+        </Provider>
+    </BrowserRouter>
 );
