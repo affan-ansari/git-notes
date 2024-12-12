@@ -11,30 +11,13 @@ import {
     CircularProgress,
 } from '@mui/material';
 
-import TablePaginationControls from './table-pagination';
-
 import './custom-table.styles.scss';
 
 const CustomTable = <T extends { [key: string]: any }>({
     columns,
     data,
     loading,
-    paginationVariant = 'primary',
 }: CustomTableProps<T>) => {
-    const ROWS_PER_PAGE = 8;
-    const [page, setPage] = useState<number>(0);
-
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
-        setPage(page);
-    };
-
-    // const totalPages = Math.ceil(data.length / ROWS_PER_PAGE);
-    const paginatedData = useMemo(() => {
-        const start = page * ROWS_PER_PAGE;
-        const end = start + ROWS_PER_PAGE;
-        return data.slice(start, end);
-    }, [data, page, ROWS_PER_PAGE]);
-
     return (
         <Box>
             <TableContainer component={Box} className="custom-table__tableBox">
@@ -62,8 +45,8 @@ const CustomTable = <T extends { [key: string]: any }>({
                                     </Box>
                                 </TableCell>
                             </TableRow>
-                        ) : paginatedData.length > 0 ? (
-                            paginatedData.map((row, rowIndex) => (
+                        ) : data.length > 0 ? (
+                            data.map((row, rowIndex) => (
                                 <TableRow key={row.id || rowIndex} hover>
                                     {columns.map((column, colIndex) => (
                                         <TableCell
@@ -94,11 +77,6 @@ const CustomTable = <T extends { [key: string]: any }>({
                     </TableBody>
                 </Table>
             </TableContainer>
-            <TablePaginationControls
-                count={data.length}
-                currentPage={page}
-                onPageChange={handleChangePage}
-            />
         </Box>
     );
 };
