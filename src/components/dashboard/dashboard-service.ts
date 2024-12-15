@@ -10,6 +10,11 @@ export const getPublicGists = async (url: string) => {
     return response.data;
 };
 
+export const getGist = async (url: string) => {
+    const response = await axiosInstance.get<IPublicGist>(url);
+    return response.data;
+};
+
 // Service helper methods
 const getFilterParams = (paramsString: string) => {
     const filterParams: Record<string, string> = {};

@@ -1,14 +1,24 @@
 import EmumbaIcon from '../../assets/svgComponents/EmumbaIcon';
+
 import { Search } from '@mui/icons-material';
 import { GithubAuth } from '../../firebase/init';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectCurrentUser, setCurrentUser } from '../dashboard/slices/authSlice';
 import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
 
 import './navbar.styles.scss';
 
 export default function Navbar() {
+    const dispatch = useAppDispatch();
+    const currentUser = useAppSelector(selectCurrentUser);
+
     async function GithubLogIn() {
-        const user = await GithubAuth();
-        console.log('github user: ', user);
+        try {
+            const { user, credential } = await GithubAuth();
+            dispatch(setCurrentUser({ user: user, token: credential?.accessToken }));
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
