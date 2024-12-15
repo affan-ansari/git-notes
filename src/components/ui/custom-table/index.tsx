@@ -1,4 +1,3 @@
-import { useMemo, useState } from 'react';
 import { CustomTableProps } from './custom-table.types';
 import {
     Box,
@@ -41,7 +40,7 @@ const CustomTable = <T extends { [key: string]: any }>({
                             <TableRow>
                                 <TableCell colSpan={columns.length} align="center">
                                     <Box>
-                                        <CircularProgress />
+                                        <CircularProgress disableShrink />
                                     </Box>
                                 </TableCell>
                             </TableRow>

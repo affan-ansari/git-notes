@@ -9,6 +9,13 @@ body {
     font-family: 'Inter', sans-serif !important;
 }
 
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
 .global__overflowTextContent {
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -17,4 +24,25 @@ body {
     line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+/* total width */
+pre::-webkit-scrollbar {
+    // background-color: #fff;
+    width: 16px;
+}
+
+/* scrollbar itself */
+pre::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 4px solid #f0f0f0;
+}
+
+/* set button(top and bottom of the scrollbar) */
+pre::-webkit-scrollbar-button {
+    display: none;
 }

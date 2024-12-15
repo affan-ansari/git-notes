@@ -1,0 +1,10 @@
+.gist-heading__mainBox {
+    display: flex;
+    gap: 0.5rem;
+    .gist-heading__text {
+        color: #003b44;
+    }
+    .gist-heading__gistName {
+        font-weight: bold;
+    }
+}

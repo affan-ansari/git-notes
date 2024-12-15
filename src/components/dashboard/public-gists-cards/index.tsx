@@ -11,7 +11,7 @@ const PublicGistsCards: React.FC<IPublicGistsCardsProps> = ({ gists, loading }) 
         <Grid container spacing={4} mb={2}>
             {loading ? (
                 <Box className="public-gists-cards__loadingBox">
-                    <CircularProgress />
+                    <CircularProgress disableShrink />
                 </Box>
             ) : (
                 gists.map((gist) => (
@@ -20,7 +20,6 @@ const PublicGistsCards: React.FC<IPublicGistsCardsProps> = ({ gists, loading }) 
                     </Grid>
                 ))
             )}
-            {}
         </Grid>
     );
 };

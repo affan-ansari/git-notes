@@ -1,4 +1,58 @@
+.public-gist-card__card {
+    cursor: pointer;
+    position: relative;
+    .public-gist-card__codeContainer {
+        position: relative;
+        border: 1px solid #f0f0f0;
+        border-radius: 4px;
+        padding: 1px;
+        background-color: #f0f0f0;
+    }
+    .public-gist-card__viewBox {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        background-color: #003b44;
+        color: #ffffff;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: 1;
+        pointer-events: none;
+        max-width: 200px;
+        padding: 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .public-gist-card__actions {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        gap: 0.5rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        display: flex;
+    }
+    &:hover {
+        .public-gist-card__codeContainer {
+            border: 1px solid #003b44;
+        }
+        .public-gist-card__viewBox {
+            opacity: 1;
+        }
+        .public-gist-card__actions {
+            opacity: 1;
+        }
+    }
+}
+
 .public-gist-card__cardContent {
+    position: relative;
     display: flex;
     gap: 0.5rem;
     .public-gist-card__text {
