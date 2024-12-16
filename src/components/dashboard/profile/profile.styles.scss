@@ -1,0 +1,44 @@
+.profile__mainBox {
+    display: flex;
+    gap: 1rem;
+}
+
+.profile__gistsBox {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.profile__loadingBox {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.profile__details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+
+    .profile__name {
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 30.26px;
+        letter-spacing: -0.02em;
+    }
+}
+
+.profile__gistsCountBox {
+    background-color: #003b44;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

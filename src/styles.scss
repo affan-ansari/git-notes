@@ -46,3 +46,9 @@ pre::-webkit-scrollbar-thumb {
 pre::-webkit-scrollbar-button {
     display: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
