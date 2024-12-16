@@ -7,6 +7,9 @@ import { selectCurrentUser, setCurrentUser } from '../dashboard/slices/authSlice
 import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
 
 import './navbar.styles.scss';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import AvatarButton from './avatar-button';
 
 export default function Navbar() {
     const dispatch = useAppDispatch();
@@ -21,11 +24,20 @@ export default function Navbar() {
         }
     }
 
+    useEffect(() => {
+        const userString = localStorage.getItem('user');
+        const tokenString = localStorage.getItem('token');
+        if (userString && tokenString) {
+            const user = JSON.parse(userString);
+            dispatch(setCurrentUser({ user: user, token: tokenString }));
+        }
+    }, [dispatch]);
+
     return (
         <AppBar position="fixed">
             <Toolbar>
                 <Box className="navbar__mainBox">
-                    <Box className="navbar__logoBox">
+                    <Box component={Link} to="/" className="navbar__logoBox">
                         <EmumbaIcon />
                         <Typography variant="h5">EMUMBA</Typography>
                     </Box>
@@ -45,13 +57,17 @@ export default function Navbar() {
                                 },
                             }}
                         />
-                        <Button
-                            className="navbar__loginBtn"
-                            variant="contained"
-                            onClick={GithubLogIn}
-                        >
-                            Login
-                        </Button>
+                        {currentUser ? (
+                            <AvatarButton />
+                        ) : (
+                            <Button
+                                className="navbar__loginBtn"
+                                variant="contained"
+                                onClick={GithubLogIn}
+                            >
+                                Login
+                            </Button>
+                        )}
                     </Box>
                 </Box>
             </Toolbar>

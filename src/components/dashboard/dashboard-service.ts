@@ -24,6 +24,7 @@ export const getAuthenticatedGists = async (url: string) => {
     const paramsString = url.split('?')[1];
     const filterParams = getFilterParams(paramsString);
     const response = await axiosInstance.get<IPublicGist[]>('/gists', { params: filterParams });
+
     const linkHeader = response.headers.link;
     const lastPage = extractLastPage(linkHeader);
     const totalPages = lastPage ?? parseInt(filterParams['page']);
