@@ -34,7 +34,7 @@ const PublicGistCard: React.FC<IPublicGistCardProps> = ({ gist }) => {
         <Card
             className="public-gist-card__card"
             component={Box}
-            onClick={() => navigate(`gists/${gist.id}`)}
+            onClick={() => navigate(`/gists/${gist.id}`)}
         >
             <Box className="public-gist-card__codeContainer">
                 <Box className="public-gist-card__viewBox">

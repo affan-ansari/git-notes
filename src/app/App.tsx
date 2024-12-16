@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
+
 import Home from '../pages/home';
 import RootLayout from '../layouts/root';
+import ProfilePage from '../pages/profile-page';
 import GistDetailPage from '../pages/gist-detail-page';
 
 export const App = () => {
@@ -10,6 +12,7 @@ export const App = () => {
                 <Route element={<RootLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="gists/:id" element={<GistDetailPage />} />
+                    <Route path="profile" element={<ProfilePage />} />
                 </Route>
             </Routes>
         </div>
