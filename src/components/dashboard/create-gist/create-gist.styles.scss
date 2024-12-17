@@ -1,0 +1,34 @@
+.create-gist__filenameBox {
+    border: 1px solid #f0f0f0;
+    background-color: #fafafa;
+    padding: 1rem;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    .gist-create__filenameField {
+        width: 40%;
+    }
+}
+
+.create-gist__codeEditor {
+    border: 1px solid #f0f0f0;
+    border-top: unset;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    height: 300px;
+    overflow-y: auto;
+    font-size: 14px;
+    .ͼ2 .cm-gutters {
+        background-color: unset;
+        border: unset;
+    }
+}
+
+.create-gist__actionBtnBox {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    .create-gist__addBtn {
+        background-color: #efefef;
+        color: #003b44;
+    }
+}

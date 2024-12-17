@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
+import { GithubSignout } from '../../../firebase/init';
 import { getUser } from '../../../components/dashboard/dashboard-service';
 import { clearCurrentUser } from '../../../components/dashboard/slices/authSlice';
 import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Typography } from '@mui/material';
@@ -26,7 +27,8 @@ const AvatarButton = () => {
         setAnchorEl(null);
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await GithubSignout();
         dispatch(clearCurrentUser());
         navigate('/');
     };

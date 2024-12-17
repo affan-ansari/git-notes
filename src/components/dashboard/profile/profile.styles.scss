@@ -32,6 +32,13 @@
     }
 }
 
+.profile__gistsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1;
+}
+
 .profile__gistsCountBox {
     background-color: #003b44;
     color: white;
