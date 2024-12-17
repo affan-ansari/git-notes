@@ -1,4 +1,5 @@
 import axiosInstance from '../../app/axios';
+import { GistFormData } from './create-gist/create-gist.types';
 import { IGithubUser, IPublicGist } from './dashboard.types';
 
 export const getPublicGists = async (url: string) => {
@@ -29,6 +30,13 @@ export const getAuthenticatedGists = async (url: string) => {
     const lastPage = extractLastPage(linkHeader);
     const totalPages = lastPage ?? parseInt(filterParams['page']);
     return { gistsData: response.data, totalPages };
+};
+
+export const createGist = async (formData: GistFormData) => {
+    console.log(formData);
+    return await axiosInstance.post('/gists', {
+        ...formData,
+    });
 };
 
 // Service helper methods

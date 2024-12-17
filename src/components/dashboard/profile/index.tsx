@@ -3,12 +3,15 @@ import GistsPaginationControls from './gists-pagination';
 import PublicGistCard from '../public-gists-cards/public-gist-card';
 
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAuthenticatedGists, getUser } from '../dashboard-service';
 import { Avatar, Box, Button, CircularProgress, Typography } from '@mui/material';
 
 import './profile.styles.scss';
 
 const Profile = () => {
+    const navigate = useNavigate();
+
     const PER_PAGE = 2;
     const [page, setPage] = useState(1);
 
@@ -46,9 +49,18 @@ const Profile = () => {
                 </Button>
             </Box>
             <Box className="profile__gistsBox">
-                <Box display={'flex'} alignItems={'center'} gap={1}>
-                    <Typography variant="h4">All Gists</Typography>
-                    <Box className="profile__gistsCountBox">{totalGists}+</Box>
+                <Box className="profile__gistsHeader">
+                    <Box display={'flex'} gap={1} alignItems={'center'}>
+                        <Typography variant="h4">All Gists</Typography>
+                        <Box className="profile__gistsCountBox">{totalGists}+</Box>
+                    </Box>
+                    <Button
+                        variant="contained"
+                        className="profile__addBtn"
+                        onClick={() => navigate('/gists/new')}
+                    >
+                        Create a Gist
+                    </Button>
                 </Box>
 
                 {gistsLoading ? (
