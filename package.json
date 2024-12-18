@@ -20,6 +20,7 @@
     "@uiw/react-codemirror": "^4.23.7",
     "axios": "^1.7.8",
     "codemirror": "^6.0.1",
+    "dotenv": "^16.4.7",
     "firebase": "^11.0.2",
     "moment": "^2.30.1",
     "react": "18.3.1",

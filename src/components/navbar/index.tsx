@@ -1,11 +1,12 @@
+import AvatarButton from './avatar-button';
 import EmumbaIcon from '../../assets/svgComponents/EmumbaIcon';
 
-import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import AvatarButton from './avatar-button';
+import { useEffect, useState } from 'react';
 import { Search } from '@mui/icons-material';
 import { GithubAuth } from '../../firebase/init';
+import { setSearchQuery } from '../../slices/globalSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectCurrentUser, setCurrentUser } from '../dashboard/slices/authSlice';
 import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
@@ -15,6 +16,7 @@ import './navbar.styles.scss';
 export default function Navbar() {
     const dispatch = useAppDispatch();
     const currentUser = useAppSelector(selectCurrentUser);
+    const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 
     async function GithubLogIn() {
         try {
@@ -36,6 +38,17 @@ export default function Navbar() {
         }
     }, [dispatch]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            console.log(debouncedSearchQuery);
+            dispatch(setSearchQuery(debouncedSearchQuery));
+        }, 1000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [dispatch, debouncedSearchQuery]);
+
     return (
         <AppBar position="fixed">
             <Toolbar>
@@ -50,6 +63,7 @@ export default function Navbar() {
                             placeholder="Search gists..."
                             className="navbar__searchBox"
                             size="small"
+                            onChange={(e) => setDebouncedSearchQuery(e.target.value)}
                             slotProps={{
                                 input: {
                                     startAdornment: (
