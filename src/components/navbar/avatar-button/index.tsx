@@ -53,7 +53,9 @@ const AvatarButton = () => {
                 </Box>
                 <Divider />
                 <MenuItem onClick={() => navigate('/profile')}>Your gists</MenuItem>
-                <MenuItem>Starred gists</MenuItem>
+                <MenuItem onClick={() => navigate('/profile/starred-gists')}>
+                    Starred gists
+                </MenuItem>
                 <a
                     href={currentUser?.html_url}
                     target="_blank"

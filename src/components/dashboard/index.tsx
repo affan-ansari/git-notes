@@ -8,8 +8,9 @@ import PublicGistsPaginationControls from './public-gists-pagination';
 import KeywordCell from '../ui/custom-table/cell-renderer/keyword-cell';
 import GistActionsCell from '../ui/custom-table/cell-renderer/gist-actions-cell';
 
+import { useState } from 'react';
 import { Box } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IPublicGist } from './dashboard.types';
 import { getPublicGists } from './dashboard-service';
 import { Column } from '../ui/custom-table/custom-table.types';
@@ -27,19 +28,6 @@ const Dashboard = () => {
     );
     const loading = isLoading || isValidating;
 
-    const handleFork = useCallback(
-        () => (gist: IPublicGist) => {
-            console.log(gist.id);
-        },
-        []
-    );
-    const handleStar = useCallback(
-        () => (gist: IPublicGist) => {
-            console.log(gist.html_url);
-        },
-        []
-    );
-
     const columns: Column<IPublicGist>[] = [
         {
             label: 'Name',
@@ -51,7 +39,11 @@ const Dashboard = () => {
             width: '40%',
             render: (value, _) => {
                 const key = Object.keys(value.row.files)[0];
-                return <Box className="global__overflowTextContent">{key}</Box>;
+                return (
+                    <Link to={`/gists/${value.row.id}`} className="global__overflowTextContent">
+                        {key}
+                    </Link>
+                );
             },
         },
         {
@@ -68,7 +60,6 @@ const Dashboard = () => {
             label: '',
             width: '5%',
             render: GistActionsCell,
-            renderProps: { onFork: handleFork, onStar: handleStar },
         },
     ];
     return (

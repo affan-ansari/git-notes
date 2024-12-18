@@ -1,5 +1,9 @@
 import EmumbaIcon from '../../assets/svgComponents/EmumbaIcon';
 
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import AvatarButton from './avatar-button';
 import { Search } from '@mui/icons-material';
 import { GithubAuth } from '../../firebase/init';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -7,9 +11,6 @@ import { selectCurrentUser, setCurrentUser } from '../dashboard/slices/authSlice
 import { AppBar, Box, Button, InputAdornment, TextField, Toolbar, Typography } from '@mui/material';
 
 import './navbar.styles.scss';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import AvatarButton from './avatar-button';
 
 export default function Navbar() {
     const dispatch = useAppDispatch();
@@ -18,9 +19,11 @@ export default function Navbar() {
     async function GithubLogIn() {
         try {
             const { user, credential } = await GithubAuth();
+            toast.success('Logged in successfully');
             dispatch(setCurrentUser({ user: user, token: credential?.accessToken }));
         } catch (error) {
-            console.log(error);
+            const err = error as Error;
+            toast.error(err.message);
         }
     }
 

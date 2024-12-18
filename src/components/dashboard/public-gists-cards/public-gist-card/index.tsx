@@ -1,18 +1,31 @@
+import useSWR from 'swr';
 import moment from 'moment';
+import StarIcon from '@mui/icons-material/Star';
+import Spinner from '../../../../components/ui/spinner';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import GitStarIcon from '../../../../assets/svgComponents/GitStarIcon';
 import GitForkIcon from '../../../../assets/svgComponents/GitForkIcon';
 
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GistResponseErrorData } from '../../dashboard.types';
 import { IPublicGistCardProps } from './public-gist-card.types';
 import { Avatar, Box, Card, CardContent, IconButton, Typography } from '@mui/material';
+import { forkGist, isStarredGist, starGist, unStarGist } from '../../dashboard-service';
 
 import './public-gist-card.styles.scss';
 
 const PublicGistCard: React.FC<IPublicGistCardProps> = ({ gist }) => {
     const navigate = useNavigate();
     const [code, setCode] = useState('');
+    const [isStarred, setIsStarred] = useState(false);
+    const [starringGist, setStarringGist] = useState(false);
+    const [forkingGist, setForkingGist] = useState(false);
+
+    const { data, isLoading, isValidating } = useSWR(`/gists/${gist.id}/star`, isStarredGist);
+    const loading = isLoading || isValidating;
 
     useEffect(() => {
         const key = Object.keys(gist.files)[0];
@@ -29,6 +42,43 @@ const PublicGistCard: React.FC<IPublicGistCardProps> = ({ gist }) => {
                 console.error('Error fetching the Gist:', error);
             });
     }, [gist.files]);
+
+    useEffect(() => {
+        if (data) setIsStarred(true);
+    }, [data]);
+
+    const handleFork = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        setForkingGist(true);
+        try {
+            await forkGist(gist.id);
+            toast.success('Gist forked successfully!');
+        } catch (error) {
+            const err = error as AxiosError;
+            const errData = err.response?.data as GistResponseErrorData;
+            toast.error(errData?.message ?? err.message ?? 'Something went wrong');
+        }
+        setForkingGist(false);
+    };
+
+    const handleStar = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        setStarringGist(true);
+        try {
+            if (isStarred) {
+                await unStarGist(gist.id);
+                toast.success('Gist unstarred successfully!');
+            } else {
+                await starGist(gist.id);
+                toast.success('Gist starred successfully!');
+            }
+            setIsStarred((prev) => !prev);
+        } catch (error) {
+            const err = error as Error;
+            toast.error(err.message);
+        }
+        setStarringGist(false);
+    };
 
     return (
         <Card
@@ -70,17 +120,20 @@ const PublicGistCard: React.FC<IPublicGistCardProps> = ({ gist }) => {
                     </Typography>
                 </Box>
                 <Box className="public-gist-card__actions">
-                    <IconButton onClick={() => console.log('start icon')}>
-                        <GitStarIcon />
-                    </IconButton>
-                    <IconButton
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            console.log('fork icon');
-                        }}
-                    >
-                        <GitForkIcon />
-                    </IconButton>
+                    {forkingGist ? (
+                        <Spinner />
+                    ) : (
+                        <IconButton onClick={handleFork}>
+                            <GitForkIcon />
+                        </IconButton>
+                    )}
+                    {starringGist || loading ? (
+                        <Spinner />
+                    ) : (
+                        <IconButton onClick={handleStar}>
+                            {isStarred ? <StarIcon color="primary" /> : <GitStarIcon />}
+                        </IconButton>
+                    )}
                 </Box>
             </CardContent>
         </Card>

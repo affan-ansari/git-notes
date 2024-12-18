@@ -34,7 +34,7 @@ const GistsPaginationControls: React.FC<IPublicGistsPaginationControlsProps> = (
                     type="number"
                     value={currentPage}
                     onKeyDown={handleKeyDown}
-                    sx={{ width: '40px' }}
+                    sx={{ width: '55px', padding: 'none' }}
                     onChange={(e) => {
                         const parsedValue = parseInt(e.target.value);
                         setCurrentPage(isNaN(parsedValue) ? undefined : parsedValue);

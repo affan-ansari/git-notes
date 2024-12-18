@@ -32,8 +32,40 @@ export const getAuthenticatedGists = async (url: string) => {
     return { gistsData: response.data, totalPages };
 };
 
+export const getAuthenticatedStarredGists = async (url: string) => {
+    const paramsString = url.split('?')[1];
+    const filterParams = getFilterParams(paramsString);
+    const response = await axiosInstance.get<IPublicGist[]>('/gists/starred', {
+        params: filterParams,
+    });
+
+    const linkHeader = response.headers.link;
+    const lastPage = extractLastPage(linkHeader);
+    const totalPages = lastPage ?? parseInt(filterParams['page']);
+    return { gistsData: response.data, totalPages };
+};
+
+export const starGist = async (gistId: string) => {
+    const response = await axiosInstance.put(`/gists/${gistId}/star`);
+    return response.status;
+};
+
+export const unStarGist = async (gistId: string) => {
+    const response = await axiosInstance.delete(`/gists/${gistId}/star`);
+    return response.data;
+};
+
+export const isStarredGist = async (url: string) => {
+    const response = await axiosInstance.get(url);
+    return response.status;
+};
+
+export const forkGist = async (gistId: string) => {
+    const response = await axiosInstance.post(`/gists/${gistId}/forks`);
+    return response.status;
+};
+
 export const createGist = async (formData: GistFormData) => {
-    console.log(formData);
     return await axiosInstance.post('/gists', {
         ...formData,
     });
