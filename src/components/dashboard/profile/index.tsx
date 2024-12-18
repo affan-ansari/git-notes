@@ -4,12 +4,12 @@ import PublicGistCard from '../public-gists-cards/public-gist-card';
 
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuthenticatedGists, getUser } from '../dashboard-service';
 import { Avatar, Box, Button, CircularProgress, Typography } from '@mui/material';
+import { getAuthenticatedGists, getAuthenticatedStarredGists, getUser } from '../dashboard-service';
 
 import './profile.styles.scss';
 
-const Profile = () => {
+const Profile = ({ getStarredGists = false }) => {
     const navigate = useNavigate();
 
     const PER_PAGE = 2;
@@ -22,7 +22,10 @@ const Profile = () => {
         data: gists,
         isLoading: isGistsLoading,
         isValidating: isGistsValidating,
-    } = useSWR(`/gists?page=${page}&per_page=${PER_PAGE}`, getAuthenticatedGists);
+    } = useSWR(
+        `/gists${getStarredGists && '/starred'}?page=${page}&per_page=${PER_PAGE}`,
+        getStarredGists ? getAuthenticatedStarredGists : getAuthenticatedGists
+    );
     const gistsLoading = isGistsLoading || isGistsValidating;
 
     const totalGists = useMemo(() => {
@@ -51,8 +54,10 @@ const Profile = () => {
             <Box className="profile__gistsBox">
                 <Box className="profile__gistsHeader">
                     <Box display={'flex'} gap={1} alignItems={'center'}>
-                        <Typography variant="h4">All Gists</Typography>
-                        <Box className="profile__gistsCountBox">{totalGists}+</Box>
+                        <Typography variant="h4">
+                            {getStarredGists ? 'Starred Gists' : 'All Gists'}
+                        </Typography>
+                        {totalGists && <Box className="profile__gistsCountBox">{totalGists}+</Box>}
                     </Box>
                     <Button
                         variant="contained"
@@ -72,11 +77,17 @@ const Profile = () => {
                         {gists?.gistsData.map((gist) => (
                             <PublicGistCard key={gist.id} gist={gist} />
                         ))}
-                        <GistsPaginationControls
-                            page={page}
-                            totalPages={gists?.totalPages}
-                            setPage={setPage}
-                        />
+                        {gists?.gistsData.length === 0 ? (
+                            <Typography variant="h5" display="flex" justifyContent="center">
+                                No data
+                            </Typography>
+                        ) : (
+                            <GistsPaginationControls
+                                page={page}
+                                totalPages={gists?.totalPages}
+                                setPage={setPage}
+                            />
+                        )}
                     </>
                 )}
             </Box>

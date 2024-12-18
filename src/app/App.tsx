@@ -14,6 +14,10 @@ export const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="gists/:id" element={<GistDetailPage />} />
                     <Route path="profile" element={<ProfilePage />} />
+                    <Route
+                        path="profile/starred-gists"
+                        element={<ProfilePage getStarredGists={true} />}
+                    />
                     <Route path="gists/new" element={<CreateGistPage />} />
                 </Route>
             </Routes>

@@ -127,3 +127,10 @@ export interface IGithubUser {
     created_at: string;
     updated_at: string;
 }
+
+export interface GistResponseErrorData {
+    documentation_url: string;
+    errors: Array<object>;
+    message: string;
+    status: string;
+}

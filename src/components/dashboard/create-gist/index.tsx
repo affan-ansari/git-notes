@@ -1,10 +1,14 @@
 import CodeMirror from '@uiw/react-codemirror';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 import { createGist } from '../dashboard-service';
 import { GistFormInputs } from './create-gist.types';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { GistResponseErrorData } from '../dashboard.types';
 import { gistSchema } from '../../../validations/validation';
 import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
 import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
@@ -12,6 +16,8 @@ import { Controller, SubmitHandler, useFieldArray, useForm } from 'react-hook-fo
 import './create-gist.styles.scss';
 
 const CreateGist = () => {
+    const navigate = useNavigate();
+
     const {
         control,
         handleSubmit,
@@ -42,10 +48,13 @@ const CreateGist = () => {
         };
 
         try {
-            const response = await createGist(payload);
-            console.log(response.data);
-        } catch (err) {
-            console.log(err);
+            await createGist(payload);
+            toast.success('Gist created successfully');
+            navigate('/profile');
+        } catch (error) {
+            const err = error as AxiosError;
+            const errData = err.response?.data as GistResponseErrorData;
+            toast.error(errData?.message ?? err.message ?? 'Something went wrong');
         }
     };
 

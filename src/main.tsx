@@ -9,6 +9,7 @@ import { App } from './app/App';
 import './styles.scss';
 import { swrConfig } from './swrConfig';
 import { SWRConfig } from 'swr';
+import { ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -17,6 +18,18 @@ root.render(
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <SWRConfig value={swrConfig}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored"
+                    />
                     <App />
                 </SWRConfig>
             </ThemeProvider>
