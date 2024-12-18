@@ -5,6 +5,7 @@ import RootLayout from '../layouts/root';
 import ProfilePage from '../pages/profile-page';
 import GistDetailPage from '../pages/gist-detail-page';
 import CreateGistPage from '../pages/create-gist-page';
+import ProtectedRootLayout from '../layouts/protected-root';
 
 export const App = () => {
     return (
@@ -13,6 +14,8 @@ export const App = () => {
                 <Route element={<RootLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="gists/:id" element={<GistDetailPage />} />
+                </Route>
+                <Route element={<ProtectedRootLayout />}>
                     <Route path="profile" element={<ProfilePage />} />
                     <Route
                         path="profile/starred-gists"
