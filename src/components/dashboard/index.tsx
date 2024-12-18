@@ -12,19 +12,24 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { IPublicGist } from './dashboard.types';
-import { getPublicGists } from './dashboard-service';
+import { useAppSelector } from '../../app/hooks';
+import { selectSearchQuery } from '../../slices/globalSlice';
 import { Column } from '../ui/custom-table/custom-table.types';
+import { getPublicGists, getUserGists } from './dashboard-service';
 
 import './dashboard.styles.scss';
 
 const Dashboard = () => {
     const [viewStyle, setViewStyle] = useState<'list' | 'card'>('list');
     const [page, setPage] = useState(1);
+    const searchQueryUserId = useAppSelector(selectSearchQuery);
     const PER_PAGE = 8;
 
     const { data, isLoading, isValidating } = useSWR(
-        `/gists/public?page=${page}&per_page=${PER_PAGE}`,
-        getPublicGists
+        searchQueryUserId
+            ? `/users/${searchQueryUserId}/gists?page=${page}&per_page=${PER_PAGE}`
+            : `/gists/public?page=${page}&per_page=${PER_PAGE}`,
+        searchQueryUserId ? getUserGists : getPublicGists
     );
     const loading = isLoading || isValidating;
 

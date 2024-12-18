@@ -2,17 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 
 const initialState = {
-    count: 0,
+    searchQuery: '',
 };
 
 export const globalSlice = createSlice({
     name: 'global',
     initialState,
-    reducers: {},
+    reducers: {
+        setSearchQuery: (state, action) => {
+            state.searchQuery = action.payload;
+        },
+    },
 });
 
-// export const { setCurrentUser, clearCurrentUser } = authSlice.actions;
+export const { setSearchQuery } = globalSlice.actions;
 
-export const selectCount = (state: RootState) => state.global.count;
+export const selectSearchQuery = (state: RootState) => state.global.searchQuery;
 
 export default globalSlice.reducer;

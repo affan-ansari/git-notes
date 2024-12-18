@@ -11,6 +11,15 @@ export const getPublicGists = async (url: string) => {
     return response.data;
 };
 
+export const getUserGists = async (url: string) => {
+    const paramsString = url.split('?')[1];
+    const filterParams = getFilterParams(paramsString);
+    const response = await axiosInstance.get<IPublicGist[]>(url, {
+        params: filterParams,
+    });
+    return response.data;
+};
+
 export const getGist = async (url: string) => {
     const response = await axiosInstance.get<IPublicGist>(url);
     return response.data;
